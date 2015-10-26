@@ -1,9 +1,9 @@
 #include "DINO.h"
 #include "DINOTaskSplit.h"
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/InstIterator.h"
 #include "llvm/IR/Module.h"
 #include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/CFG.h"
+#include "llvm/IR/CFG.h"
 #include <cstdio>
 #include <iostream>
 

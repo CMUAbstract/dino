@@ -4,7 +4,7 @@
 #include <llvm/IR/Function.h>
 #include <llvm/IR/Module.h>
 #include <llvm/IR/IRBuilder.h>
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/InstIterator.h"
 #include <llvm/Support/raw_ostream.h>
 #include "DINO.h"
 #include "DINOVersioner.h"
@@ -337,7 +337,7 @@ DINOVersioner::~DINOVersioner () {
 }
 
 void DINOVersioner::getAnalysisUsage (AnalysisUsage &AU) const {
-  AU.addPreserved<LoopInfo>();
+  AU.addPreserved<LoopInfoWrapperPass>();
 }
 
 const char *DINOVersioner::getPassName () const {

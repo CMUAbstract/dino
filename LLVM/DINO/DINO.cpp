@@ -3,9 +3,9 @@
 #include "llvm/IR/Function.h"
 #include "llvm/IR/Instruction.h"
 #include "llvm/IR/Instructions.h"
-#include "llvm/PassManager.h"
+#include "llvm/IR/LegacyPassManager.h"
 #include "llvm/Transforms/IPO/PassManagerBuilder.h"
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/InstIterator.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/raw_ostream.h"
 #include "DINO.h"
@@ -24,7 +24,7 @@ const char *DINOPrefix = "__dino_";
 const char *NVGlobalPrefix = "__NV_";
 
 namespace {
-    static void registerDINO (const llvm::PassManagerBuilder &, llvm::PassManagerBase &PM) {
+    static void registerDINO (const llvm::PassManagerBuilder &, llvm::legacy::PassManagerBase &PM) {
         PM.add(llvm::createDINOTaskSplit());
         PM.add(llvm::createDINOTaskBoundaries());
         PM.add(llvm::createDINOVersioner());

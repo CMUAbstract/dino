@@ -4,7 +4,7 @@
 #include <llvm/IR/Function.h>
 #include <llvm/IR/Module.h>
 #include <llvm/IR/IRBuilder.h>
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/InstIterator.h"
 #include <llvm/Support/raw_ostream.h>
 #include "DINO.h"
 #include "DINOComplexityAnalysis.h"
@@ -42,8 +42,8 @@ bool DINOComplexityAnalysis::runOnModule (Module &M) {
     for (auto &F : M.getFunctionList()) {
 
       if( !F.isDeclaration() ){
-        LoopInfo &LI = getAnalysis<LoopInfo>(F);
-        DTBsPass.LI = &LI;
+        LoopInfoWrapperPass &LI = getAnalysis<LoopInfoWrapperPass>(F);
+        DTBsPass.LI = &LI.getLoopInfo();
       }
 
       if (DINOGlobal::shouldIgnoreFunction(F)){
@@ -209,8 +209,8 @@ DINOComplexityAnalysis::~DINOComplexityAnalysis () {
 
 void DINOComplexityAnalysis::getAnalysisUsage (AnalysisUsage &AU) const {
 
-  AU.addRequired<LoopInfo>();
-  AU.addPreserved<LoopInfo>();
+  AU.addRequired<LoopInfoWrapperPass>();
+  AU.addPreserved<LoopInfoWrapperPass>();
 
 }
 

@@ -1,7 +1,7 @@
 #include "llvm/IR/Instructions.h"
 #include "llvm/IR/Module.h"
-#include "llvm/Support/CallSite.h"
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/CallSite.h"
+#include "llvm/IR/InstIterator.h"
 #include "DINOTaskBoundaries.h"
 using namespace llvm;
 
@@ -19,7 +19,7 @@ DINOTaskBoundaries::~DINOTaskBoundaries(){
 
 
 void DINOTaskBoundaries::getAnalysisUsage(llvm::AnalysisUsage &AU) const {
-  AU.addPreserved<LoopInfo>();
+  AU.addPreserved<LoopInfoWrapperPass>();
 }
 
 void FindCallers(llvm::Module &M, llvm::Function &F, DINOGlobal::FuncList &Callers){

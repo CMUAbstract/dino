@@ -1,9 +1,9 @@
 #include "DINO.h"
 #include "DINOTaskCost.h"
-#include "llvm/Support/InstIterator.h"
+#include "llvm/IR/InstIterator.h"
 #include "llvm/IR/Module.h"
 #include "llvm/Support/raw_ostream.h"
-#include "llvm/Support/CFG.h"
+#include "llvm/IR/CFG.h"
 #include <llvm/Analysis/CallGraph.h>
 #include <cstdio>
 #include <iostream>
@@ -234,8 +234,8 @@ bool DINOTaskCost::runOnModule (Module &M)
 void DINOTaskCost::getAnalysisUsage (AnalysisUsage &AU) const
 {
   /*Modifies the CFG!*/
-  AU.addRequired<CallGraph>();
-  AU.addPreserved<LoopInfo>();
+  AU.addRequired<CallGraphWrapperPass>();
+  AU.addPreserved<LoopInfoWrapperPass>();
 
 }
 

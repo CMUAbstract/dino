@@ -1,0 +1,29 @@
+include Makefile.common
+
+PREFIX=$(LLVM_ROOT)/bin/
+CLANG=$(PREFIX)clang
+LLVM_LINK=$(PREFIX)llvm-link
+
+# Nasty non-portable way to get standard GCC headers (borrowed from Mementos)
+# NOTE: it's a script because could not get the qouting/escaping to work out.
+GCC_HEADERS=$(shell GCC=$(GCC) ./gcc-headers.sh)
+
+CFLAGS += \
+	-c \
+	-emit-llvm \
+	--target=msp430 \
+	-D__MSP430FR5969__ \
+	-DMEMENTOS_FRAM \
+	-Wall \
+	$(GCC_HEADERS) \
+	-I$(GCC_ROOT)/include \
+	-I$(MEMENTOS_ROOT)/include \
+
+dino.a.bc: dino.bc
+	$(LLVM_LINK) -o $@ dino.bc
+
+dino.bc: dino.c
+	$(CLANG) $(CFLAGS) -o dino.bc -c $<
+
+clean:
+	rm -f *.bc

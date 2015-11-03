@@ -10,19 +10,34 @@ void __dino_set_recovery_bit();
 void __dino_unset_recovery_bit();
 unsigned int __dino_recovery_bit_set();
 
+/* Macros for manual versioning */
+
 /*Primitive types form*/
-#define DINO_VERSION(type,var) type DINO_VERSION_#var = var;
+#define DINO_VERSION_VAL(type,var) type DINO_VERSION_ ## var = var;
 
 /*General form*/
-#define DINO_VERSION_PTR(var,sz) char *DINO_VERSION_##var[sz]; memcpy((void*)DINO_VERSION_##var,(void*)var,sz);
+#define DINO_VERSION_PTR(var, type) \
+    type DINO_VERSION_##var; \
+    memcpy((void*)DINO_VERSION_##var, (void*)var, sizeof(type)); \
+
+#define DINO_REVERT_BEGIN()     if( __dino_recovery_bit_set() ){
+#define DINO_REVERT_VAL(nm)         nm = DINO_VERSION_##nm
+#define DINO_REVERT_PTR(type,nm)    memcpy(nm, DINO_VERSION_##nm, sizeof(type))
+#define DINO_REVERT_END()       __dino_unset_recovery_bit(); }
 
 #define DINO_VERSION_NAME(var) DINO_VERSION_##var
 
-#define DINO_TASK_BOUNDARY_WITH_VERSIONS(t,...) __mementos_checkpoint();\
+/* Makes use of the above macros which must be called after the boundary */
+#define DINO_TASK_BOUNDARY_MANUAL(t) __mementos_checkpoint();\
+
+/* Makes use of the recovery method defined using macros below */
+#define DINO_TASK_BOUNDARY_SEMIAUTO(t,...) __mementos_checkpoint();\
                                   if( __dino_recovery_bit_set() ){\
                                     __dino_recover(t, __VA_ARGS__);\
                                     __dino_unset_recovery_bit();\
                                   }
+
+/* Macros for automated compiler-inserted versioning */
 
 #define DINO_TASK_BOUNDARY(t,...) __dino_task_boundary(t);\
                                   __mementos_checkpoint();

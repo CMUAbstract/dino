@@ -254,7 +254,6 @@ void DINOVersioner::insertVersioning(llvm::BasicBlock &TB,
     IRBuilder<> Builder(module->getContext());
 
     GlobalVariable *GV = getVarFromStore(SI);
-    Twine newName = "__volatile_copy_of_" + GV->getName();
 
     llvm::BasicBlock &funcHeader = TB.getParent()->front();
     Builder.SetInsertPoint(&funcHeader,funcHeader.getFirstInsertionPt());
@@ -266,7 +265,8 @@ void DINOVersioner::insertVersioning(llvm::BasicBlock &TB,
     }
     if( VolatileCopies[TB.getParent()].find(GV) == 
           VolatileCopies[TB.getParent()].end() ){
-      VolatileCopies[TB.getParent()][GV] = Builder.CreateAlloca(Ty, 0, newName);
+      VolatileCopies[TB.getParent()][GV] =
+          Builder.CreateAlloca(Ty, 0, "__volatile_copy_of_" + GV->getName());
     }
     AI = VolatileCopies[TB.getParent()][GV];
 

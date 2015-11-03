@@ -281,7 +281,7 @@ void DINOVersioner::insertVersioning(llvm::BasicBlock &TB,
       }
     }
     assert(I != NULL);
-#ifdef VERBOSE
+#ifdef DINO_VERBOSE
     outs() << "Inserting versioning at [" << *I << "]\n";
 #endif
     Builder.SetInsertPoint(I);

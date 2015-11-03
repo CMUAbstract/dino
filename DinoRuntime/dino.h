@@ -12,7 +12,7 @@ unsigned int __dino_recovery_bit_set();
 /* Macros for manual versioning */
 
 /*Primitive types form*/
-#define DINO_VERSION_VAL(type,var) type DINO_VERSION_ ## var = var;
+#define DINO_VERSION_VAL(type,var,label) type DINO_VERSION_ ## label = var;
 
 /*General form*/
 #define DINO_VERSION_PTR(var, type) \
@@ -20,7 +20,7 @@ unsigned int __dino_recovery_bit_set();
     memcpy((void*)DINO_VERSION_##var, (void*)var, sizeof(type)); \
 
 #define DINO_REVERT_BEGIN()     if( __dino_recovery_bit_set() ){
-#define DINO_REVERT_VAL(nm)         nm = DINO_VERSION_##nm
+#define DINO_REVERT_VAL(nm,label)   nm = DINO_VERSION_ ## label
 #define DINO_REVERT_PTR(type,nm)    memcpy(nm, DINO_VERSION_##nm, sizeof(type))
 #define DINO_REVERT_END()       __dino_unset_recovery_bit(); }
 

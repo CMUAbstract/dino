@@ -22,6 +22,7 @@ const char *DINOPrefix = "__dino_";
 // Nonvolatile globals need to be prefixed with this name for us to recognize
 // them as such.
 const char *NVGlobalPrefix = "__NV_";
+const char *NVGlobalSection = ".nv_vars";
 
 namespace {
     static void registerDINO (const llvm::PassManagerBuilder &, llvm::legacy::PassManagerBase &PM) {
@@ -70,8 +71,9 @@ bool DINOGlobal::isNVStore (Instruction &I)
         sec = GA->getSection();
 #ifdef DINO_VERBOSE
         outs() << "Got a GV with a section: <" << GA->getSection() << ">\n";
-        if( sec.compare("FRAMVARS") == 0 ){
-          outs() << "Got a FRAMVAR: " << GV->getName() << "\n";
+        if( sec.compare(NVGlobalSection) == 0) {
+          outs() << "Got an NV var: " << GV->getName() << "\n";
+          return true;
         }
 #endif
       }
@@ -84,7 +86,7 @@ bool DINOGlobal::isNVStore (Instruction &I)
      */
     if( (GV->getName().find(NVGlobalPrefix) == 0) ||
         (GV->getName().find("\x01" "0x") == 0)    ||
-        ( sec.compare("FRAMVARS") == 0 ) ){
+        ( sec.compare(NVGlobalSection) == 0 ) ){
 
       return true; 
 

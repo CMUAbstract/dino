@@ -22,6 +22,7 @@ namespace llvm {
 }
 
 extern const char *NVGlobalPrefix;
+extern const char *NVGlobalSection;
 extern const char *DINOTaskBoundaryFunctionName;
 extern const char *DINOVersionFunctionName;
 extern const char *DINOPrefix;

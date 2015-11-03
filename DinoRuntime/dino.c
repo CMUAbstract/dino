@@ -1,21 +1,16 @@
 #include "dino.h"
 #include <mementos.h>
-static unsigned int __dino_recovery_bit;
 
 void __dino_task_boundary(unsigned t){
   
 }
 
-void __dino_set_recovery_bit(){
-  __dino_recovery_bit = 1;
-}
-
 void __dino_unset_recovery_bit(){
-  __dino_recovery_bit = 0;
+  __mementos_restored = 0;
 }
 
 unsigned int __dino_recovery_bit_set(){
-  return ((__dino_recovery_bit)==0x1);
+  return ((__mementos_restored)==0x1);
 }
 
 unsigned int __dino_find_next_recovery( ){

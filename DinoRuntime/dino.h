@@ -6,7 +6,6 @@
 #define DINO_SECOND_RECOVERY 0xef78 
 
 void __dino_task_boundary(unsigned);
-void __dino_set_recovery_bit();
 void __dino_unset_recovery_bit();
 unsigned int __dino_recovery_bit_set();
 

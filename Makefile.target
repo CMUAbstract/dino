@@ -1,0 +1,35 @@
+# This is the Makefile for using the DINO toolchain to build an app.
+# Include it from a bld/dino directory in your app (built with 'maker').
+
+include $(MAKER_ROOT)/Makefile.env
+
+# Part of DINO's target makefile responsibility is to configure
+# Mementos. Mementos configuration is not exposed to target.
+
+MEMENTOS_MODE = manual
+include $(MEMENTOS_ROOT)/Makefile.flags
+
+CFLAGS += \
+	-DDINO \
+
+DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
+
+# TODO: move to external call to OPT:
+#OPT_MODULE_FLAGS = $(OPT_COMMON_FLAGS)
+#OPT_PROGRAM_FLAGS = $(DINO_LIB)
+#OPT_MODULES =
+#OPT_FLAGS=-debug -stats
+
+# ... until then, invoke the passes directly in the clang invocation
+# TODO: until DINO supports versioning arrays (and pointers), we don't
+# use DINO compiler passes, but immitate them manually using macros.
+#CFLAGS += -Xclang -load -Xclang $(DINO_LIB)
+
+DEPS += \
+	libdino \
+	libmementos \
+
+DEP_ROOT_libdino = $(DINO_ROOT)/DinoRuntime
+DEP_ROOT_libmementos = $(MEMENTOS_ROOT)
+
+include $(MAKER_ROOT)/Makefile.clang

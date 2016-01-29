@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdarg.h>
-#include <mementos.h>
+
+#include <libmementos/mementos.h>
 
 #define DINO_FIRST_RECOVERY  0xef7a 
 #define DINO_SECOND_RECOVERY 0xef78 

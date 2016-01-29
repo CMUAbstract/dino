@@ -1,5 +1,6 @@
-#include "dino.h"
-#include <mementos.h>
+#include <libmementos/mementos.h>
+
+#include <libdino/dino.h>
 
 void __dino_task_boundary(unsigned t){
   

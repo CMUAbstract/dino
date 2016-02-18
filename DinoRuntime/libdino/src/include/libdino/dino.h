@@ -1,3 +1,8 @@
+#ifdef DINO // if DINO is enabled (this is not an include guard)
+			// We do this instead of ifdef'ing every include site only because
+			// we actually want to re-use the defines that dummy out DINO
+			// macros so that they don't have to be repeated in every task.
+
 #include <string.h>
 #include <stdarg.h>
 
@@ -67,6 +72,22 @@ unsigned int __dino_recovery_bit_set();
 
 #define DINO_REVERT(type,nm) type DINO_VERSION_##nm = va_arg(a,type); nm = DINO_VERSION_#nm;
 
+
+// Aggregated calls for convenience
+#define DINO_RESTORE_NONE() \
+        DINO_REVERT_BEGIN() \
+        DINO_REVERT_END() \
+
+#define DINO_RESTORE_PTR(nm, type) \
+        DINO_REVERT_BEGIN() \
+        DINO_REVERT_PTR(type, nm); \
+        DINO_REVERT_END() \
+
+#define DINO_RESTORE_VAL(nm, label) \
+        DINO_REVERT_BEGIN() \
+        DINO_REVERT_VAL(nm, label); \
+        DINO_REVERT_END() \
+
 /*We want to be able to provide three levels of recovery for NV-external inconsistency
 
 level 1: manual versioning
@@ -91,6 +112,20 @@ DINO_TASK_BOUNDARY(...) --> [for all NV vars x in this task] DINO_VERSION(x)
 
 */
 
-
+// TODO: this should be superceded by libmsp/mem.h, remove
 /* Variable placement in nonvolatile memory; linker puts this in right place */
 #define __fram __attribute__((section("FRAMVARS")))
+
+#else // !DINO
+
+#define DINO_RESTORE_CHECK()
+#define DINO_VERSION_PTR(...)
+#define DINO_VERSION_VAL(...)
+#define DINO_RESTORE_NONE()
+#define DINO_RESTORE_PTR(...)
+#define DINO_RESTORE_VAL(...)
+#define DINO_REVERT_BEGIN(...)
+#define DINO_REVERT_END(...)
+#define DINO_REVERT_VAL(...)
+
+#endif // DINO

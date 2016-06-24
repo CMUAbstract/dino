@@ -3,6 +3,8 @@
 
 include $(MAKER_ROOT)/Makefile.env
 
+DINO_MODE ?= auto
+
 ifeq ($(DINO_MODE),manual)
 LOCAL_CFLAGS += -DDINO_MODE_MANUAL
 else ifeq ($(DINO_MODE),semiauto)

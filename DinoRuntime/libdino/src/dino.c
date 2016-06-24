@@ -6,6 +6,11 @@ void __dino_task_boundary(unsigned t){
   
 }
 
+void __dino_empty_versioning() {
+  if(__dino_recovery_bit_set())
+      __dino_unset_recovery_bit();
+}
+
 void __dino_unset_recovery_bit(){
   __mementos_restored = 0;
 }

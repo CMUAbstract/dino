@@ -9,8 +9,7 @@ include $(MAKER_ROOT)/Makefile.env
 MEMENTOS_MODE = manual
 include $(MEMENTOS_ROOT)/Makefile.flags
 
-CFLAGS += \
-	-DDINO \
+override CFLAGS += -DDINO
 
 DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
 
@@ -23,9 +22,9 @@ DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
 # ... until then, invoke the passes directly in the clang invocation
 # TODO: until DINO supports versioning arrays (and pointers), we don't
 # use DINO compiler passes, but immitate them manually using macros.
-#CFLAGS += -Xclang -load -Xclang $(DINO_LIB)
+#override CFLAGS += -Xclang -load -Xclang $(DINO_LIB)
 
-DEPS += \
+override DEPS += \
 	libdino \
 	libmementos \
 

@@ -9,7 +9,7 @@ include $(MAKER_ROOT)/Makefile.env
 MEMENTOS_MODE = manual
 include $(MEMENTOS_ROOT)/Makefile.flags
 
-override CFLAGS += -DDINO
+LOCAL_CFLAGS += -DDINO
 
 DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
 
@@ -30,5 +30,7 @@ override DEPS += \
 
 DEP_ROOT_libdino = $(DINO_ROOT)/DinoRuntime
 DEP_ROOT_libmementos = $(MEMENTOS_ROOT)
+
+override CLFAGS += $(LOCAL_CFLAGS)
 
 include $(MAKER_ROOT)/Makefile.clang

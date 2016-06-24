@@ -3,6 +3,16 @@
 
 include $(MAKER_ROOT)/Makefile.env
 
+ifeq ($(DINO_MODE),manual)
+LOCAL_CFLAGS += -DDINO_MODE_MANUAL
+else ifeq ($(DINO_MODE),semiauto)
+LOCAL_CFLAGS += -DDINO_MODE_MANUAL
+else ifeq ($(DINO_MODE),auto)
+LOCAL_CFLAGS += -DDINO_MODE_AUTO
+else
+$(error Unrecognized DINO mode: $(DINO_MODE))
+endif
+
 # Part of DINO's target makefile responsibility is to configure
 # Mementos. Mementos configuration is not exposed to target.
 

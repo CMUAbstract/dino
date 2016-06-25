@@ -36,6 +36,12 @@ ifeq ($(DINO_MODE),auto)
 	  -o $@ $<
 
 LINK_OBJECTS = $(OBJECTS:.o=.dino.bc)
+
+else # DINO_MODE = manual || semiauto
+
+%.dino.bc : %.bc
+	cp $^ $@
+
 endif # DINO_MODE = auto
 
 override DEPS += \

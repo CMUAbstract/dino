@@ -1,5 +1,5 @@
-#ifndef DINO_H
-#define DINO_H
+#ifndef LIBDINO_DINO_H
+#define LIBDINO_DINO_H
 
 #ifdef DINO // support building without DINO support by no-opping all ops
 
@@ -141,4 +141,4 @@ DINO_TASK_BOUNDARY(...) --> [for all NV vars x in this task] DINO_MANUAL_VERSION
 
 #endif // !DINO || !DINO_MODE_MANUAL
 
-#endif // DINO_H
+#endif // LIBDINO_DINO_H

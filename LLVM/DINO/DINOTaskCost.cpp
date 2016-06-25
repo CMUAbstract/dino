@@ -250,6 +250,11 @@ const char *DINOTaskCost::getPassName () const {
 
 char DINOTaskCost::ID = 0;
 
+static RegisterPass<DINOTaskCost> X("dino--task-cost",
+    "DINO: analyse task boundary cost");
+
+#ifdef AUTORUN_PASSES
 ModulePass *llvm::createDINOTaskCost() {
     return new DINOTaskCost();
 }
+#endif // AUTORUN_PASSES

@@ -344,9 +344,14 @@ const char *DINOVersioner::getPassName () const {
     return "DINO Versioning Transformation";
 }
 
+static RegisterPass<DINOVersioner> X("dino--versioner",
+    "DINO: perform versioning transformation");
+
+#ifdef AUTORUN_PASSES
 ModulePass *llvm::createDINOVersioner () {
     return new DINOVersioner();
 }
+#endif // AUTORUN_PASSES
 
 /*
  NOTES:

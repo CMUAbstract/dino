@@ -97,6 +97,11 @@ const char *DINOTaskSplit::getPassName () const {
 
 char DINOTaskSplit::ID = 0;
 
+static RegisterPass<DINOTaskSplit> X("dino--task-split",
+    "DINO: perform task splitting analysis");
+
+#ifdef AUTORUN_PASSES
 ModulePass *llvm::createDINOTaskSplit() {
     return new DINOTaskSplit();
 }
+#endif // AUTORUN_PASSES

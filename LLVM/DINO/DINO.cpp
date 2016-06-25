@@ -25,6 +25,7 @@ const char *NVGlobalPrefix = "__NV_";
 const char *NVGlobalSection = ".nv_vars";
 
 namespace {
+#ifdef AUTORUN_PASSES
     static void registerDINO (const llvm::PassManagerBuilder &, llvm::legacy::PassManagerBase &PM) {
         PM.add(llvm::createDINOTaskSplit());
         PM.add(llvm::createDINOTaskBoundaries());
@@ -36,6 +37,7 @@ namespace {
     // Run DINO pass after all other optimizations.
     static llvm::RegisterStandardPasses
         RegisterDINO(llvm::PassManagerBuilder::EP_EnabledOnOptLevel0, registerDINO);
+#endif // AUTORUN_PASSES
 }
 
 llvm::GlobalVariable *DINOGlobal::getVarFromStore (llvm::StoreInst &SI)

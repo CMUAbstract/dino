@@ -272,7 +272,11 @@ const char *DINOTaskBoundaries::getPassName () const {
 
 char DINOTaskBoundaries::ID = 0;
 
+static RegisterPass<DINOTaskBoundaries> X("dino--task-boundaries",
+    "DINO: perform interprocedural task boundary collection analysis");
+
+#ifdef AUTORUN_PASSES
 llvm::ModulePass *llvm::createDINOTaskBoundaries(){
   return new DINOTaskBoundaries();
 }
-
+#endif // AUTORUN_PASSES

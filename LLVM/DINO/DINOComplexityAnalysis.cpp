@@ -218,9 +218,14 @@ const char *DINOComplexityAnalysis::getPassName () const {
     return "DINO Path Complexity Analyzer";
 }
 
+static RegisterPass<DINOComplexityAnalysis> X("dino--path-complexity",
+    "DINO: analyse path complexity");
+
+#ifdef AUTORUN_PASSES
 ModulePass *llvm::createDINOComplexityAnalysis () {
     return new DINOComplexityAnalysis();
 }
+#endif // AUTORUN_PASSES
 
 /*
  NOTES:

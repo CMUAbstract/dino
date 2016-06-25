@@ -25,16 +25,18 @@ LOCAL_CFLAGS += -DDINO
 
 DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
 
-# TODO: move to external call to OPT:
-#OPT_MODULE_FLAGS = $(OPT_COMMON_FLAGS)
-#OPT_PROGRAM_FLAGS = $(DINO_LIB)
-#OPT_MODULES =
-#OPT_FLAGS=-debug -stats
+ifeq ($(DINO_MODE),auto)
+%.dino.bc : %.bc
+	$(OPT) -debug -stats -load $(DINO_LIB) \
+	  -dino--task-split \
+	  -dino--task-boundaries \
+	  -dino--versioner \
+	  -dino--task-cost \
+	  -dot-cfg \
+	  -o $@ $<
 
-# ... until then, invoke the passes directly in the clang invocation
-# TODO: until DINO supports versioning arrays (and pointers), we don't
-# use DINO compiler passes, but immitate them manually using macros.
-#override CFLAGS += -Xclang -load -Xclang $(DINO_LIB)
+LINK_OBJECTS = $(OBJECTS:.o=.dino.bc)
+endif # DINO_MODE = auto
 
 override DEPS += \
 	libdino \

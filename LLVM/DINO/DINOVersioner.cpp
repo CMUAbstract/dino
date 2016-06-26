@@ -17,6 +17,30 @@ bool DINOVersioner::doInitialization (Module &M) {
     return false;
 }
 
+// Insert call to restore function (aka. the checkpointing function) at each
+// boundary. The generated versioning code will go between the call to the task
+// boundary function and the call to restore function.
+void DINOVersioner::insertRestoreCalls(Module &M, Function *restoreFunc)
+{
+#ifdef DINO_VERBOSE
+    outs() << "Inserting calls to restore (aka. checkpointing) function\n";
+#endif
+
+    for (auto &F : M.getFunctionList()) {
+        if (DINOGlobal::shouldIgnoreFunction(F))
+            continue;
+
+        for (auto &BB : F) {
+            for (auto &I : BB) {
+                if (DINOGlobal::isTaskBoundaryInstruction(I)) {
+                    IRBuilder<> Builder(I.getNextNode());
+                    Builder.CreateCall(restoreFunc);
+                }
+            }
+        }
+    }
+}
+
 /**
  * Outline:
  * Phase 1: In any order, mark all stores to NV variables.  Each function is
@@ -37,6 +61,9 @@ bool DINOVersioner::runOnModule (Module &M) {
     DINOTaskBoundaries DTBsPass;
     DTBsPass.doInitialization(M);
     DTBsPass.runOnModule(M);
+
+    Function *restoreFunc = DINOGlobal::declareRestoreFunc(M);
+    insertRestoreCalls(M, restoreFunc);
 
     // For each store to a nonvolatile variable, traverse the CFG backward to
     // find the task boundaries that can flow to the store.  At these task

@@ -160,6 +160,15 @@ bool DINOGlobal::isRestoreInstruction(llvm::Instruction &I) {
 
 }
 
+Function *DINOGlobal::declareRestoreFunc(Module &M) {
+  LLVMContext &ctx = M.getContext();
+  auto funcTy = FunctionType::get(Type::getVoidTy(ctx), /* isVarArg */ false);
+  auto func = Function::Create(funcTy, GlobalValue::ExternalLinkage,
+                               DINORestoreFunctionName, &M);
+  func->setCallingConv(CallingConv::C);
+  return func;
+}
+
 /**
  * Starting with an Instruction, traverse the CFG backward on all possible
  * paths, stopping on each path when we hit a task boundary.  Return the set of

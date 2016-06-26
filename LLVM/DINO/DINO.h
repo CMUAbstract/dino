@@ -49,6 +49,7 @@ public:
     static bool isTaskBoundaryInstruction(llvm::Instruction &I);
     static bool isFuncEntryInstruction(llvm::Instruction &I);
     static bool isRestoreInstruction(llvm::Instruction &I);
+    static llvm::Function *declareRestoreFunc(llvm::Module &M);
     static bool shouldIgnoreFunction (const llvm::Function &F);
 
     /*TODO: Move getTaskBoundaries* to TaskBoundaries*/

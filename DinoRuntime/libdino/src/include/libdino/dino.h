@@ -84,8 +84,7 @@ unsigned int __dino_recovery_bit_set();
 
 #else // DINO_MODE_AUTO (compiler-inserted versioning)
 
-#define DINO_TASK_BOUNDARY(t) __dino_task_boundary(t);\
-                              __mementos_checkpoint();
+#define DINO_TASK_BOUNDARY(t) __dino_task_boundary(t)
 
 #endif // DINO_MODE_*
 

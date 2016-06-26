@@ -13,6 +13,7 @@ public:
     virtual bool doFinalization (llvm::Module &M);
     virtual void getAnalysisUsage (llvm::AnalysisUsage &AU) const;
 
+    void insertRestoreCalls(llvm::Module &M, llvm::Function *restoreFunc);
     bool isNVStore (llvm::Instruction &I);
     llvm::GlobalVariable *getVarFromStore (llvm::StoreInst &SI);
     void insertVersioning (llvm::BasicBlock &TB, llvm::StoreInst &SI);

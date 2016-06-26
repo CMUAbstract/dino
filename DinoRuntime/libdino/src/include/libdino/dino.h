@@ -50,7 +50,7 @@ unsigned int __dino_recovery_bit_set();
         DINO_MANUAL_REVERT_END() \
 
 /* Makes use of the above macros which must be called after the boundary */
-#define DINO_TASK_BOUNDARY(t) __mementos_checkpoint();\
+#define DINO_TASK_BOUNDARY(t) __mementos_checkpoint()
 
 #elif defined(DINO_MODE_SEMIAUTO)
 

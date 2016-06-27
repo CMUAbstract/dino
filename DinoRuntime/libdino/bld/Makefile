@@ -7,8 +7,8 @@ LIB = libdino
 OBJECTS = \
 	dino.o \
 
-CFLAGS += \
+override CFLAGS += \
 	-I$(SRC_ROOT)/include \
 
-DEPS += libmementos
+override DEPS += libmementos
 DEP_ROOT_libmementos ?= $(MEMENTOS_ROOT)

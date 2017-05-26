@@ -54,6 +54,3 @@ DEP_ROOT_libmementos = $(MEMENTOS_ROOT)
 override CLFAGS += $(LOCAL_CFLAGS)
 
 include $(MAKER_ROOT)/Makefile.clang
-
-# do not remove any intermediate artifacts
-.SECONDARY:

@@ -1,11 +1,9 @@
-include $(MEMENTOS_ROOT)/Makefile.flags
-
-override SRC_ROOT = ../../src
-
 LIB = libdino
 
 OBJECTS = \
 	dino.o \
+
+override SRC_ROOT = ../../src
 
 # NOTE: requiring DINO flag to build libdino is not very nice. The flag is
 # meant for apps to build with/without DINO support. The reason is that dino.h
@@ -18,6 +16,6 @@ OBJECTS = \
 override CFLAGS += \
 	-DDINO \
 	-I$(SRC_ROOT)/include \
+	-I$(SRC_ROOT)/include/$(LIB) \
 
-override DEPS += libmementos
-DEP_ROOT_libmementos ?= $(MEMENTOS_ROOT)
+include $(MAKER_ROOT)/Makefile.$(TOOLCHAIN)

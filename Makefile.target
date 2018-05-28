@@ -1,9 +1,9 @@
 # This is the Makefile for using the DINO toolchain to build an app.
-# Include it from a bld/dino directory in your app (built with 'maker').
-
-include $(MAKER_ROOT)/Makefile.env
 
 DINO_MODE ?= auto
+
+DINO_ROOT ?= $(LIB_ROOT)/dino
+MEMENTOS_ROOT ?= $(LIB_ROOT)/mementos
 
 ifeq ($(DINO_MODE),manual)
 LOCAL_CFLAGS += -DDINO_MODE_MANUAL
@@ -19,11 +19,13 @@ endif
 # Mementos. Mementos configuration is not exposed to target.
 
 MEMENTOS_MODE = manual
-include $(MEMENTOS_ROOT)/Makefile.flags
+MEMENTOS_USER_MAIN = 1
+include $(MEMENTOS_ROOT)/libmementos/Makefile.config
+include $(MEMENTOS_ROOT)/libmementos/Makefile.options
 
 LOCAL_CFLAGS += -DDINO
 
-DINO_LIB = $(DINO_ROOT)/LLVM/bld/lib/DINO.so
+DINO_LIB = $(DINO_ROOT)/LLVM/bld/DINO/libDINO.so
 
 ifeq ($(DINO_MODE),auto)
 %.dino.bc : %.bc
@@ -53,4 +55,5 @@ DEP_ROOT_libmementos = $(MEMENTOS_ROOT)
 
 override CLFAGS += $(LOCAL_CFLAGS)
 
+override TOOLCHAIN = clang
 include $(MAKER_ROOT)/Makefile.clang

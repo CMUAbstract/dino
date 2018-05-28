@@ -6,7 +6,7 @@ public:
     static char ID;
     DINOComplexityAnalysis ();
     virtual ~DINOComplexityAnalysis ();
-    virtual const char *getPassName() const;
+    virtual llvm::StringRef getPassName() const;
 
     virtual bool doInitialization (llvm::Module &M);
     virtual bool runOnModule (llvm::Module &M);

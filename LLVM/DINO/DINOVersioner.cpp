@@ -367,7 +367,7 @@ void DINOVersioner::getAnalysisUsage (AnalysisUsage &AU) const {
   AU.addPreserved<LoopInfoWrapperPass>();
 }
 
-const char *DINOVersioner::getPassName () const {
+llvm::StringRef DINOVersioner::getPassName () const {
     return "DINO Versioning Transformation";
 }
 

@@ -6,7 +6,7 @@ public:
     static char ID;
     DINOVersioner ();
     virtual ~DINOVersioner ();
-    virtual const char *getPassName() const;
+    virtual llvm::StringRef getPassName() const;
 
     virtual bool doInitialization (llvm::Module &M);
     virtual bool runOnModule (llvm::Module &M);

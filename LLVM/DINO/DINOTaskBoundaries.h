@@ -14,7 +14,7 @@ public:
   virtual bool runOnModule(llvm::Module &M);
   virtual bool doFinalization(llvm::Module &CG);
   bool doInitialization (llvm::Module &CG);
-  const char *getPassName () const;
+  virtual llvm::StringRef getPassName () const;
   
   void FindTaskBoundariesIPA(llvm::Module &M, llvm::Function &Caller, llvm::Function &Callee, DINOGlobal::BasicBlockSet &TBs);
   void FindMementosTaskBoundariesIPA(llvm::Module &M, llvm::Function &Caller, llvm::Function &Callee, DINOGlobal::BasicBlockSet &TBs);

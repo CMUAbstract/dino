@@ -5,7 +5,7 @@ class DINOTaskSplit: public llvm::ModulePass {
         static char ID;
         DINOTaskSplit();
         virtual ~DINOTaskSplit();
-        virtual const char *getPassName() const;
+		virtual llvm::StringRef getPassName () const;
 
         virtual bool doInitialization (llvm::Module &M);
         virtual bool runOnModule (llvm::Module &M);

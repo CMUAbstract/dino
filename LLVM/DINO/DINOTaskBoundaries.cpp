@@ -266,7 +266,7 @@ bool DINOTaskBoundaries::doInitialization (llvm::Module &M)
 }
 
 
-const char *DINOTaskBoundaries::getPassName () const {
+llvm::StringRef DINOTaskBoundaries::getPassName () const {
     return "DINO Interprocedural Task Boundary Collection Analysis";
 }
 

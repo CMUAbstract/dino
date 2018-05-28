@@ -8,7 +8,7 @@ class DINOTaskCost: public llvm::ModulePass {
         static char ID;
         DINOTaskCost();
         virtual ~DINOTaskCost();
-        virtual const char *getPassName() const;
+        virtual llvm::StringRef getPassName() const;
 
         virtual bool doInitialization (llvm::Module &M);
         virtual bool runOnModule (llvm::Module &M);

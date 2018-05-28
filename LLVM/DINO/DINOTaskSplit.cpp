@@ -50,11 +50,11 @@ bool DINOTaskSplit::runOnModule (Module &M)
      
             if(DINOGlobal::isTaskBoundaryInstruction(I)){
               
-              if( &I == TI ){ /*It is already at the front of a block*/
+              if( &I == &(*TI) ){ /*It is already at the front of a block*/
                 continue; 
               }
 
-              B.splitBasicBlock(I);
+              B.splitBasicBlock(&I);
 
               changing = true;
 
@@ -91,7 +91,7 @@ bool DINOTaskSplit::doFinalization (Module &M)
     return false;
 }
 
-const char *DINOTaskSplit::getPassName () const {
+llvm::StringRef DINOTaskSplit::getPassName () const {
     return "DINO Task Splitting Analysis";
 }
 

@@ -244,7 +244,7 @@ bool DINOTaskCost::doFinalization (Module &M)
     return false;
 }
 
-const char *DINOTaskCost::getPassName () const {
+llvm::StringRef DINOTaskCost::getPassName () const {
     return "DINO Task Boundary Cost Analysis";
 }
 

@@ -214,7 +214,7 @@ void DINOComplexityAnalysis::getAnalysisUsage (AnalysisUsage &AU) const {
 
 }
 
-const char *DINOComplexityAnalysis::getPassName () const {
+llvm::StringRef DINOComplexityAnalysis::getPassName () const {
     return "DINO Path Complexity Analyzer";
 }
 
